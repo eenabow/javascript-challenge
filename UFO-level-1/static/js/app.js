@@ -5,10 +5,15 @@ var columns= ["datetime", "city", "state", "country", "shape", "minutes", "comme
 
 // Get a reference to the table body
 var tbody = d3.select("tbody");
+var button = d3.select('#button');
+var form = d3.select('#form');
 
-// Console.log the weather data from data.js
-console.log(tableData);
 
+
+// Assign handler function to objects in the HTML file == button and form
+
+
+// BELOW IS JUST ACTIVITY CODE
 // // Step 1: Loop Through `data` and console.log each weather report object
 // data.forEach(function(weatherReport) {
 //   console.log(weatherReport);
