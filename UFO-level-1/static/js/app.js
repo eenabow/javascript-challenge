@@ -1,73 +1,37 @@
 // Get data from data.js
 var tableData = data;
 
-var columns= ["datetime", "city", "state", "country", "shape", "minutes", "comment"]
+var columns = ["datetime", "city", "state", "country", "shape", "minutes", "comment"]
 
-// Get a reference to the table body
+// Get a reference to the table body in index.html
 var tbody = d3.select("tbody");
-var button = d3.select('#button');
+var button = d3.select('#filter-btn');
 var form = d3.select('#form');
 
+function buildTable(applicableData) {
+  tbody.html("");
+  applicableData.forEach((UFOsighting) => {
+    var row = tbody.append("tr");
+    Object.entries(UFOsighting).forEach(([key, value]) => {
+      var cell = row.append("td");
+      cell.text(value);
+    });
+  });
+};
 
+buildTable(tableData);
+
+function filter() {
+  const inputDate = d3.select('#datetime').property('value');
+  let filteredData = tableData;
+  if (inputDate) {
+  filteredData = filteredData.filter(row => row.datetime === inputDate);
+  };
+  buildTable(filteredData);
+};
 
 // Assign handler function to objects in the HTML file == button and form
+button.on("click", filter);
 
-
-// BELOW IS JUST ACTIVITY CODE
-// // Step 1: Loop Through `data` and console.log each weather report object
-// data.forEach(function(weatherReport) {
-//   console.log(weatherReport);
-// });
-
-// // Step 2:  Use d3 to append one table row `tr` for each weather report object
-// // Don't worry about adding cells or text yet, just try appending the `tr` elements.
-// data.forEach(function(weatherReport) {
-//   console.log(weatherReport);
-//   var row = tbody.append("tr");
-// });
-
-// // Step 3:  Use `Object.entries` to console.log each weather report value
-// data.forEach(function(weatherReport) {
-//   console.log(weatherReport);
-//   var row = tbody.append("tr");
-
-//   Object.entries(weatherReport).forEach(function([key, value]) {
-//     console.log(key, value);
-//   });
-// });
-
-// // Step 4: Use d3 to append 1 cell per weather report value (weekday, date, high, low)
-// data.forEach(function(weatherReport) {
-//   console.log(weatherReport);
-//   var row = tbody.append("tr");
-
-//   Object.entries(weatherReport).forEach(function([key, value]) {
-//     console.log(key, value);
-//     // Append a cell to the row for each value
-//     // in the weather report object
-//     var cell = row.append("td");
-//   });
-// });
-
-// // Step 5: Use d3 to update each cell's text with
-// // weather report values (weekday, date, high, low)
-// data.forEach(function(weatherReport) {
-//   console.log(weatherReport);
-//   var row = tbody.append("tr");
-//   Object.entries(weatherReport).forEach(function([key, value]) {
-//     console.log(key, value);
-//     // Append a cell to the row for each value
-//     // in the weather report object
-//     var cell = row.append("td");
-//     cell.text(value);
-//   });
-// });
-
-// BONUS: Refactor to use Arrow Functions!
-data.forEach((weatherReport) => {
-  var row = tbody.append("tr");
-  Object.entries(weatherReport).forEach(([key, value]) => {
-    var cell = row.append("td");
-    cell.text(value);
-  });
-});
+// Can add event handler on keystroke typying enter -- line 40, when user is in input box and clicks enter
+// button.on("click", filter);
