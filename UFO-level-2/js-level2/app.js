@@ -23,20 +23,43 @@ function buildTable(applicableData) {
     });
 };
 
-buildTable(tableData);
+// buildTable(tableData);
 
 // Assign handler function to objects in the HTML file == button and form
-button.on("click", filter);
+button.on("click", function() {
 
 // Prevent page from refreshing
 d3.event.preventDefault();
 
 // Create a filter function for datetime
-function filter() {
-    const inputDate = d3.select('#datetime').property('value');
-    let filteredData = tableData;
-    if (inputDate) {
+
+tbody.html("");
+
+filteredData = tableData;
+
+if (inputDate) {
     filteredData = filteredData.filter(row => row.datetime === inputDate);
-    };
-    buildTable(filteredData);
-  };
+};
+if (inputCity) {
+    filteredData = filteredData.filter(row => row.city === inputCity);
+};
+if (inputState) {
+    filteredData = filteredData.filter(row => row.state === inputState);
+};
+if (inputCountry) {
+    filteredData = filteredData.filter(row => row.country === inputCountry);
+};
+if (inputShape) {
+    filteredData = filteredData.filter(row => row.shape === inputShape);
+};
+filteredData.forEach((UFOsighting) => {
+    var row = tbody.append("tr");
+    Object.entries(UFOsighting).forEach(([key, value]) => {
+        var cell = row.append("td");
+        cell.text(value);
+    });
+});
+});
+
+
+    // buildTable(filteredData);
