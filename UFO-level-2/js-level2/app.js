@@ -5,11 +5,11 @@ var columns = ["datetime", "city", "state", "country", "shape", "minutes", "comm
 // Get a reference to the table body, user input values, and button in html
 var tbody = d3.select("tbody");
 var button = d3.select('#filter-btn');
-var inputDate = d3.select('#datetime');
-var inputCity = d3.select('#city');
-var inputState = d3.select('#state');
-var inputCountry = d3.select('#country');
-var inputShape = d3.select('#shape');
+var inputDate = d3.select('#datetime').property("value").toLowerCase;
+var inputCity = d3.select('#city').property("value").toLowerCase;
+var inputState = d3.select('#state').property("value").toLowerCase;
+var inputCountry = d3.select('#country').property("value").toLowerCase;
+var inputShape = d3.select('#shape').property("value").toLowerCase;
 
 // Input the data into index.html
 function buildTable(applicableData) {
@@ -24,3 +24,19 @@ function buildTable(applicableData) {
 };
 
 buildTable(tableData);
+
+// Assign handler function to objects in the HTML file == button and form
+button.on("click", filter);
+
+// Prevent page from refreshing
+d3.event.preventDefault();
+
+// Create a filter function for datetime
+function filter() {
+    const inputDate = d3.select('#datetime').property('value');
+    let filteredData = tableData;
+    if (inputDate) {
+    filteredData = filteredData.filter(row => row.datetime === inputDate);
+    };
+    buildTable(filteredData);
+  };

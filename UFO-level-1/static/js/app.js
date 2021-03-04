@@ -6,8 +6,9 @@ var columns = ["datetime", "city", "state", "country", "shape", "minutes", "comm
 // Get a reference to the table body in index.html
 var tbody = d3.select("tbody");
 var button = d3.select('#filter-btn');
-var form = d3.select('#form');
+// var form = d3.select('#form');
 
+// Input the data into index.html
 function buildTable(applicableData) {
   tbody.html("");
   applicableData.forEach((UFOsighting) => {
@@ -21,6 +22,7 @@ function buildTable(applicableData) {
 
 buildTable(tableData);
 
+// Create a filter function for datetime
 function filter() {
   const inputDate = d3.select('#datetime').property('value');
   let filteredData = tableData;
@@ -33,5 +35,5 @@ function filter() {
 // Assign handler function to objects in the HTML file == button and form
 button.on("click", filter);
 
-// Can add event handler on keystroke typying enter -- line 40, when user is in input box and clicks enter
-// button.on("click", filter);
+// Prevent page from refreshing
+d3.event.preventDefault();
